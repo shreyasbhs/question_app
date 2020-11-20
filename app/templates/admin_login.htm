@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {%with messages = get_flashed_messages()%}
+    <ul class = "mes">
+    {%for message in messages%}
+      <li> {{ message }}</li>
+    {%endfor%}
+    </ul>
+    {%endwith%}
+    <form action="{{url_for('admin_login')}}" method="POST" novalidate>
+        {{ form.hidden_tag()}}
+        <p>
+            {{form.username.label}}
+            {{form.username}}
+            {% for error in form.username.errors%}
+            <span class='er'> {{error}}</span>
+          {%endfor%}
+
+        </p>
+        <p>
+            {{ form.password.label}}
+            {{form.password}}
+            {% for error in form.password.errors%}
+            <span class='er'> {{error}}</span>
+          {%endfor%}
+        </p>
+        {{ form.submit()}}
+    </form>
+</body>
+</html>

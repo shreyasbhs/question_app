@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/problem.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/codemirror.css')}}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename = './css/default.css')}}"> -->
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/default.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/ayu-dark.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/blackboard.css')}}">
+    <script type="text/javascript">
+      var contents = ["{{q1.content}}","{{q2.content}}","{{q3.content}}"];
+      var title = ["{{q1.title}}","{{q2.title}}","{{q3.title}}"]
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    
+    
+    <ul>
+      <li>Question 1</li>
+      <li>Question 2</li>
+      <li>Question 3</li>
+
+    </ul>
+  <div class="question">
+    <span class = "title">
+      
+  </span><br/>
+  <pre class = "content"></pre>
+  </div>
+  <div class = "editor">
+    
+  
+  <form action="" method = "POST">
+      <select name="language" id="lang">
+          <option value="text/x-csrc">c</option>
+          <option value="text/x-c++src">C++</option>
+          <option value="python">Python</option>
+          <option value="text/x-java">Java</option>
+          <option value="javascript">javascript</option>
+         
+          
+      </select>
+      <select name="theme" id="theme">
+          <option value="default">light</option>
+          <option value="blackboard">dark</option>
+      </select>
+      <textarea name = "code" id = "code">
+          {{code}}
+      </textarea>
+      
+    
+      <textarea name="inp" id = "inp" >
+               {{ inp }}
+      </textarea>
+      <input type="checkbox" name="check"  checked={{check}}>
+      <input type="submit" value="Run" id = "subbot">
+  </form>
+  
+      <span id = sub>
+          <span>submitting</span></br>
+          <img src="{{url_for('static',filename = './res/submit2.gif')}}" alt="submit"
+           width = "50px" height="50px">
+      </span>
+  
+  <p>
+      <h2> Output:</h2>
+      <pre id = "out">{{ result }}</pre>
+  </p>
+  </div>
+  
+  <script src="{{url_for('static',filename = './lib/highlight.pack.js')}}"></script>
+    
+  <script src="{{url_for('static',filename = './lib/codemirror.js')}}"></script>
+  <script src="{{url_for('static',filename = './lib/javascript.js')}}"></script>
+  <script src="{{url_for('static',filename = './lib/python.js')}}"></script>
+  <script src="{{url_for('static',filename = './lib/clike.js')}}"></script>
+
+  <script src="{{url_for('static',filename = './js/mock.js')}}"></script>
+</body>
+</html>

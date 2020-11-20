@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    {%with messages = get_flashed_messages()%}
+    <ul class = "mes">
+    {%for message in messages%}
+      <li> {{ message }}</li>
+    {%endfor%}
+    </ul>
+    {%endwith%}
+    <h1> Coding Site</h1>
+    <ul>
+   <li><a href="{{ url_for('signup')}}">Sign up</a></li>
+   {% if current_user.is_anonymous%}
+
+      <li><a href="{{url_for('login')}}">sign in</a></li>
+    {%else%}
+      <li> <a href="{{ url_for('logout')}}">log out</a></li>
+    {%endif%}
+    <li>
+      <a href="{{url_for('admin_login')}}">admin</a>
+    </li>
+    </ul>
+    {% if not current_user.is_anonymous%}
+    <h2>Welcome {{current_user.firstname}}</h2>
+    {%endif%}
+    <div class = "questions">
+      <ul>
+        {%for question in questions%}
+          <a href="{{url_for('problem',id = question.id)}}"><li> {{question.title}} </li></a>
+        {%endfor%}
+      </ul>
+    </div>
+   
+</body>
+</html>

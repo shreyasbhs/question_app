@@ -1,0 +1,9 @@
+.CodeMirror{
+    position: relative;
+    width:70%;
+    margin-right:0;
+    margin-left:10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    height:700px;
+}

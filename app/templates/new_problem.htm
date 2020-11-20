@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/codemirror.css')}}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename = './css/default.css')}}"> -->
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/default.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/ayu-dark.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename = './css/blackboard.css')}}">
+</head>
+<body>
+    <form action="{{url_for('new_problem',name = name )}}" method="POST" 
+    enctype="multipart/form-data" novalidate>
+        {{form.hidden_tag()}}
+        <p>
+            {{form.title.label}}
+            {{form.title}}
+            {% for error in form.title.errors%}
+            <span class='er'> {{error}}</span>
+          {%endfor%}
+        </p>
+        <p>
+               {{form.content.label}}
+               {{form.content}}
+               {% for error in form.content.errors%}
+               <span class='er'> {{error}}</span>
+             {%endfor%}
+
+        </p>
+      
+        
+          <form action="" method = "POST">
+            <select name="language" id="lang">
+                <option value="text/x-csrc">c</option>
+                <option value="text/x-c++src">C++</option>
+                <option value="python">Python</option>
+                <option value="text/x-java">Java</option>
+                <option value="javascript">javascript</option>
+               
+                
+            </select>
+
+            <select name="theme" id="theme">
+              <option value="default">light</option>
+              <option value="blackboard">dark</option>
+          </select>
+          <p>
+            {{form.testcode.label}}
+            {{form.testcode(id = "code")}}
+            {% for error in form.testcode.errors%}
+            <span class='er'> {{error}}</span>
+          {%endfor%}
+         
+        </p>
+        <p>
+          {{form.inputfile.label}}
+          {{form.inputfile}}
+          {% for error in form.inputfile.errors%}
+          <span class='er'> {{error}}</span>
+        {%endfor%}
+        <span id ="uperr" style="display:none">
+          Please upload a file!
+        </span>
+        <button id = "test">test</button>
+        <span id = "process" style="display:none">
+          <img src="{{url_for('static',filename = './res/processing.gif')}}" alt=""
+          width = "30px" height = "30px">
+        </span>
+        
+          <span id="success" style="display:none">
+                  Output file has been generated successfully!!
+          </span>
+          <span id = "failure" style="display:none">
+                 Could not generate output file!!!
+          </span>
+        
+     
+
+      </p>
+      {{form.output}}
+      <p>
+        {{form.company.label}}
+        {{form.company}}
+      </p>
+    
+      <p>
+        {{form.topic.label}}
+        {{form.topic}}
+      </p>
+        {{ form.submit() }}
+    </form>
+      
+  <script src="{{url_for('static',filename = './lib/codemirror.js')}}"></script>
+  <script src="{{url_for('static',filename = './lib/javascript.js')}}"></script>
+  <script src="{{url_for('static',filename = './lib/python.js')}}"></script>
+  <script src="{{url_for('static',filename = './lib/clike.js')}}"></script>
+  <script src="{{url_for("static",filename = "./js/new_problem.js")}}"></script>
+</body>
+</html>
