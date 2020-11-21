@@ -75,6 +75,8 @@ def admin(name):
     questions = a.question
     return render_template('admin.htm',name = name,questions = questions)
 
+
+
 @app.route('/<name>/new_problem',methods = ['GET','POST'])
 def new_problem(name):
     form = CreateQuestion()
@@ -108,6 +110,49 @@ def new_problem(name):
         return redirect(url_for('admin',name = name))
     return render_template('new_problem.htm',name = name,form = form)
 
+@app.route('/<name>/update_problem/<int:id>',methods = ['GET','POST'])
+def update_problem(name,id):
+    form = CreateQuestion()
+    if request.method == 'GET':
+     
+        question = Question.query.filter_by(id = id).first()
+        form.title.data = question.title
+        form.content.data = question.content
+        db.session.delete(question)
+        db.session.commit()
+    if form.validate_on_submit():
+       
+        q = form
+        ofile = q.title.data+'_o.txt'
+        ifile = q.title.data+'_i.txt'
+        #gerate inputfile
+        q.inputfile.data.save(os.path.join(basedir,'io\\input\\'+ifile))
+        #generate output file
+        
+        file = open(os.path.join(basedir,'io\\output\\'+ofile),'w')
+        file.close()
+        with open(os.path.join(basedir,'io\\output\\'+ofile),'w') as of:
+            for line in q.output.data:
+                line = line.rstrip('\n')
+                of.write(line)
+            of.close()
+            
+            
+            
+        que = Question(title  = q.title.data,content = q.content.data,
+                      outputfile = ofile,inputfile = ifile)
+       
+        
+        db.session.add(que)
+        db.session.commit()
+        a = Admin.query.filter_by(username = name).first()
+        a.question.append(que)
+        db.session.commit()
+        flash(que.title+"has been updated")
+        return redirect(url_for('admin',name = name))
+    return render_template('update_problem.htm',name = name,id = id,form = form)
+    
+
 @app.route('/problems/<int:id>',methods = ['POST','GET'])
 def problem(id):
         question = Question.query.filter_by(id = id).first()
@@ -120,7 +165,7 @@ def problem(id):
         if request.method == 'POST':
             code = request.form['code']
             inp = request.form['inp']
-            result = compile_it(code,inp)
+            # result = compile_it(code,inp)
             return render_template('problem.htm',result = result,code = code,
                                    inp = inp,question = question,id = question.id,
                                    customout=customoutput,custominput = custominput)
@@ -131,17 +176,30 @@ def problem(id):
                                    ,customoutput = customoutput,custominput = custominput);
 
 
-@app.route('/mock_interview',methods = ['GET','POST'])
-def mock_interview():
+@app.route('/mock_interview/<name>',methods = ['GET','POST'])
+def mock_interview(name):
     
-        
+    if(request.method=="POST"):
+        return redirect(url_for('home'))
     questions = Question.query.all()
     n = len(questions)
     q1 = questions[random.randint(0,n-1)]
     q2 = questions[random.randint(0,n-1)]
     q3 = questions[random.randint(0,n-1)]
-        
-    return render_template('mock_interview.htm',q1 = q1,q2 = q2,q3 = q3)
+    qs = [q1,q2,q3]
+    inputs = []
+    outputs = []
+    for q in qs:
+        fi = q.inputfile
+        fo =q.outputfile
+        custom_o_file = open(os.path.join(basedir,'io\\output\\'+fo),'r')
+        custom_i_file = open(os.path.join(basedir,'io\\input\\'+fi),'r')
+        customoutput = custom_o_file.read()
+        custominput = custom_i_file.read()
+        inputs.append(custominput)
+        outputs.append(customoutput)
+   
+    return render_template('mock_interview.htm',name = name,q1 = q1,q2 = q2,q3 = q3,inputs = inputs,outputs = outputs)
     
 
 

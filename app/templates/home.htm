@@ -29,6 +29,7 @@
     {% if not current_user.is_anonymous%}
     <h2>Welcome {{current_user.firstname}}</h2>
     {%endif%}
+    <a href="{{url_for('mock_interview',name = current_user.username)}}">Mock Interview</a>
     <div class = "questions">
       <ul>
         {%for question in questions%}

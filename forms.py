@@ -48,7 +48,7 @@ class CreateQuestion(FlaskForm):
     testcode = TextField('testcode',validators = [DataRequired()])
     inputfile = FileField('inputfile')
     output = HiddenField('output')
-    submit= SubmitField('add')
+    submit= SubmitField('Add/update')
     company = MultiCheckboxField('company',choices = [('Amazon','Amazon'),('Oracle','Oracle'),('Abobe','Abobe'),('JP Morgan','JP Morgan'),
                                                ('Goldman Sacks','Goldman Sacks')])
     topic  = MultiCheckboxField('topic',choices = [('array','array'),('string','string'),('matrix','matrix'),
@@ -58,3 +58,6 @@ class CreateQuestion(FlaskForm):
         q = Question.query.filter_by(title=title.data).first()
         if q is not None:
             raise ValidationError('This title already exists.Choose some other title')
+
+        
+    

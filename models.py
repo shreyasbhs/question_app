@@ -10,7 +10,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(30),index = True,unique = True)
     email = db.Column(db.String(120),index = True,unique = True)
     password = db.Column(db.String(120))
-   
+    profile = db.relationship('Profile',backref = db.backref('profile'))
     
 
     def set_password(self,password):
@@ -19,7 +19,16 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.password,password)
     def __rep__(self):
         return f'User {self.firstname}'
+    
 
+class Profile(db.Model):
+    id = db.Column(db.Integer,db.ForeignKey('user.id'),primary_key=True)
+    photo = db.Column(db.String(200),index=True)
+    no_questions_solves = db.Column(db.Integer,index=True)
+    no_questions_attempted =db.Column(db.Integer,index=True)
+    success_rate = db.Column(db.Integer,index = True)
+    rank = db.Column(db.Integer,index = True) 
+    
 class Admin(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(50),index = True,unique = True)

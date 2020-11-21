@@ -78,7 +78,7 @@ if(uploaded){
            clearInterval(feed);
            return;
           }
-          fetch("https://judge0.p.rapidapi.com/submissions/"+token, {
+          fetch("https://judge0.p.rapidapi.com/submissions/"+token+"?base64_encoded=true", {
         "method": "GET",
         "headers": {
           "x-rapidapi-key": "c62c0db617msh7a7282a1a7c80d3p1a88d3jsn7b1f12f9ed62",
@@ -93,16 +93,16 @@ if(uploaded){
           document.querySelector('#process').style.display = "none";
           
            accepted = true;
-           if(data.stderr){
+           if(data.status.description!="Accepted"){
            document.querySelector("#failure").style.display = "inline";
 
-            console.log(data.stderr);
+            // console.log(data.stderr);
            }
            else{
             document.querySelector('#success').style.display = "inline";
-            document.querySelector('#output').value = data.stdout;
+            document.querySelector('#output').value = atob(data.stdout);
             console.log(document.querySelector('#output').value);
-            console.log(data.stdout);
+            // console.log(data.stdout);
            }
         //    document.querySelector('#sub').style.display = 'none';
         }

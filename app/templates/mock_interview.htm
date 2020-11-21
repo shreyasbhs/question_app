@@ -11,23 +11,37 @@
     <link rel="stylesheet" href="{{ url_for('static',filename = './css/blackboard.css')}}">
     <script type="text/javascript">
       var contents = ["{{q1.content}}","{{q2.content}}","{{q3.content}}"];
-      var title = ["{{q1.title}}","{{q2.title}}","{{q3.title}}"]
+      var titles = ["{{q1.title}}","{{q2.title}}","{{q3.title}}"]
+      
     </script>
     <title>Document</title>
 </head>
 <body>
-    
-    
-    <ul>
+<span id = "timer">
+
+</span>
+<span id="score">
+
+</span>
+    <ul style = "display:none" id = "inputs">
+      {%for in in inputs%}
+       <li>{{in}}</li>
+       {%endfor%}
+    </ul>
+    <ul style = "display:none" id= "outputs">
+      {%for out in outputs%}
+      <li>{{out}}</li>
+      {%endfor%}
+    </ul>
+    <ul id = "questions">
       <li>Question 1</li>
       <li>Question 2</li>
       <li>Question 3</li>
 
     </ul>
   <div class="question">
-    <span class = "title">
-      
-  </span><br/>
+    <p class = "title">
+      </p>
   <pre class = "content"></pre>
   </div>
   <div class = "editor">
@@ -48,15 +62,14 @@
           <option value="blackboard">dark</option>
       </select>
       <textarea name = "code" id = "code">
-          {{code}}
+         
       </textarea>
       
-    
-      <textarea name="inp" id = "inp" >
-               {{ inp }}
-      </textarea>
+      <textarea name="hiddeninp" id="hiddeninp" style="display:none;"></textarea>
+      <textarea name="inp" id = "inp" ></textarea>
       <input type="checkbox" name="check"  checked={{check}}>
-      <input type="submit" value="Run" id = "subbot">
+      <input type="submit" value="Run" id = "runbot">
+      <input type= "submit" value = "Submit" id = "subbot">
   </form>
   
       <span id = sub>
@@ -67,10 +80,16 @@
   
   <p>
       <h2> Output:</h2>
-      <pre id = "out">{{ result }}</pre>
+      <pre id = "out"></pre>
   </p>
+  <pre id = "customoutput" style = "display:none"></pre>
   </div>
-  
+  <form action="{{url_for('mock_interview',name = name)}}" method="post"
+  id = "finish"
+  >
+     <input type="hidden" name="score">
+    <button> Finish </button>
+  </form>
   <script src="{{url_for('static',filename = './lib/highlight.pack.js')}}"></script>
     
   <script src="{{url_for('static',filename = './lib/codemirror.js')}}"></script>
