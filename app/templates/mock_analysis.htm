@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Mock Interview Analysis of {{user.username}}</h2>
+    <p>
+        Total: {{total}}
+    </p>
+    <ul>
+        {%for i in range(3)%}
+        <li><p>
+            {{qs[i].title}}
+
+        </p>
+        <span>
+            Status:
+            {%if qss[i]=='true'%}
+               solved
+            {%else%}
+               not solved
+            {%endif%}
+        </span>
+    </li>
+        {%endfor%}
+    </ul>
+</body>
+</html>

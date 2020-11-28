@@ -1,21 +1,50 @@
 import os
 from app import app
 from werkzeug.datastructures import CombinedMultiDict
-from flask import Flask,render_template,url_for,redirect,request,flash
+from flask import Flask,render_template,url_for,redirect,request,flash,session
 from forms import (SignupForm,LoginForm,CreateQuestion,AdminForm)
 from flask_login import current_user,login_user,logout_user
-from models import User,Question,Admin
+from models import (User,Question,Admin,Topic,
+                    Company
+                     )
 from app import db
 import random
 from compiler import compile_it
 
 
 basedir = 'C:\\Users\\user\\Desktop\\web\\flask\\practise\\practise2\\question_app\\'
-@app.route('/')
-@app.route('/<name>')
+@app.route('/',methods = ['GET', 'POST'])
+@app.route('/<name>',methods = ['GET','POST'])
 def home(name=""):
     questions = Question.query.all()
-    return render_template('home.htm',name = name,questions = questions)
+    companies = Company.query.all()
+    topics = Topic.query.all()
+    if request.method == 'POST':
+        company = request.form['company']
+        topic =request.form['topic']
+        topic = Topic.query.filter_by(name = topic).first()
+        company = Company.query.filter_by(name = company).first()
+        questions_f = questions
+        if company is not None:
+            question_f = company.questions
+            ctg = company.name
+        else:
+            question_f = questions
+            ctg = ""
+        if topic is not None:
+            question_f = [question for question in question_f if question in topic.questions]
+            ttg = topic.name
+        else:
+            question_f = [question for question in question_f]
+            ttg = ""
+        # inter = cq.intersection(tq)
+        # question_f = list(inter)
+        print(*question_f)
+        return render_template('home.htm',name = name,questions = question_f,
+                           companies = companies,topics = topics,ctg = ctg,ttg = ttg)
+    return render_template('home.htm',name = name,questions = questions,
+                           companies = companies,topics = topics,ctg = "",ttg = "")
+    
 
 
 
@@ -27,7 +56,8 @@ def signup():
         if form.validate_on_submit():
             u = form
             user = User(firstname = u.firstname.data,lastname = u.lastname.data,
-                    username = u.username.data,email = u.email.data, password = u.password.data)
+                    username = u.username.data,email = u.email.data, password = u.password.data,
+                    is_attempting = False)
             user.set_password(u.password.data)
             db.session.add(user)
             db.session.commit()
@@ -97,11 +127,16 @@ def new_problem(name):
             of.close()
             
             
-            
+        
         que = Question(title  = q.title.data,content = q.content.data,
                       outputfile = ofile,inputfile = ifile)
        
-        
+        for topic in request.form.getlist('topic'):
+            t = Topic.query.filter_by(name = topic).first()
+            t.questions.append(que)
+        for company in request.form.getlist('company'):
+            c  = Company.query.filter_by(name = company).first()
+            c.questions.append(que)
         db.session.add(que)
         db.session.commit()
         a = Admin.query.filter_by(username = name).first()
@@ -142,7 +177,12 @@ def update_problem(name,id):
         que = Question(title  = q.title.data,content = q.content.data,
                       outputfile = ofile,inputfile = ifile)
        
-        
+        for topic in request.form.getlist('topic'):
+            t = Topic.query.filter_by(name = topic).first()
+            t.questions.append(que)
+        for company in request.form.getlist('company'):
+            c  = Company.query.filter_by(name = company).first()
+            c.questions.append(que)
         db.session.add(que)
         db.session.commit()
         a = Admin.query.filter_by(username = name).first()
@@ -156,6 +196,14 @@ def update_problem(name,id):
 @app.route('/problems/<int:id>',methods = ['POST','GET'])
 def problem(id):
         question = Question.query.filter_by(id = id).first()
+        companies = []
+        topics = []
+        for c in Company.query.all():
+            if question in c.questions:
+                companies.append(c)
+        for t in Topic.query.all():
+            if question in t.questions:
+                topics.append(t)
         fi = question.inputfile
         fo =question.outputfile
         custom_o_file = open(os.path.join(basedir,'io\\output\\'+fo),'r')
@@ -163,24 +211,28 @@ def problem(id):
         customoutput = custom_o_file.read()
         custominput = custom_i_file.read()
         if request.method == 'POST':
-            code = request.form['code']
-            inp = request.form['inp']
-            # result = compile_it(code,inp)
-            return render_template('problem.htm',result = result,code = code,
-                                   inp = inp,question = question,id = question.id,
-                                   customout=customoutput,custominput = custominput)
+            if request.form['solved']=="true":
+                print('to be coded')
+                
         else:
             
             return render_template('problem.htm',result = "",code = "",
-                                   inp = "",question = question,id = question.id
-                                   ,customoutput = customoutput,custominput = custominput);
+                                   inp = "",question = question,id = question.id,
+                                   companies = companies,topics = topics,
+                                   customoutput = customoutput,custominput = custominput);
 
 
-@app.route('/mock_interview/<name>',methods = ['GET','POST'])
+
+
+@app.route('/<name>/mock_interview/',methods = ['GET','POST'])
 def mock_interview(name):
     
     if(request.method=="POST"):
+        #update codes
+        #update time
+       
         return redirect(url_for('home'))
+    
     questions = Question.query.all()
     n = len(questions)
     q1 = questions[random.randint(0,n-1)]
@@ -199,11 +251,52 @@ def mock_interview(name):
         inputs.append(custominput)
         outputs.append(customoutput)
    
-    return render_template('mock_interview.htm',name = name,q1 = q1,q2 = q2,q3 = q3,inputs = inputs,outputs = outputs)
+    else:
+        # u = User.query.filter_by(username= name).first()
+        # check = u.is_attempting
+        # if not check:
+        #     u.is_attempting = True
+        #     db.session.commit()
+        #     return render_template('mock_interview.htm',name = name,q1 = q1,q2 = q2,q3 = q3,inputs = inputs,outputs = outputs)
+        # else:
+        #     return render_template('not_allowed.htm')
+        # return render_template('not_allowed.htm')
+        return render_template('mock_interview.htm',name = name,q1 = q1,q2 = q2,q3 = q3,inputs = inputs,outputs = outputs)
+        
+        
+@app.route('/<name>/mock_interview/analysis',methods = ['POST'])
+def analysis(name):
+    user = User.query.filter_by(username = name).first()
+    user.is_attempting = False
+    db.session.commit()
+    q1id = request.form['q1']
+    q2id = request.form['q2']
+    q3id  = request.form['q3']
     
-
-
+    q1 = Question.query.filter_by(id = q1id).first()
+    q2 = Question.query.filter_by(id = q2id).first()
+    q3 = Question.query.filter_by(id = q3id).first()
     
+    q1s = request.form['q1s']
+    q2s = request.form['q2s']
+    q3s = request.form['q3s']
+    
+    qss = [q1s, q2s, q3s]
+    qs = [q1, q2, q3]
+    total = 0
+    if(q1s=='true'):
+        total += 15
+    if(q2s == 'true'):
+        total += 35
+    if(q3s == 'true'):
+        total += 50
+    
+    return render_template('mock_analysis.htm',user = user,qs = qs,
+                           qss = qss,total =total )  
+
+@app.route('/proxy')
+def proxy():
+    return render_template('proxy.htm')
         
 if __name__ == '__main__':
     app.run(debug=True)

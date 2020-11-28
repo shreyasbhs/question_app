@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {%with messages = get_flashed_messages()%}
-    <ul class = "mes">
-    {%for message in messages%}
-      <li> {{ message }}</li>
-    {%endfor%}
-    </ul>
-    {%endwith%}
-    <form action="{{url_for('login')}}" method = "POST" novalidate >
-        {{ form.hidden_tag()}}
-        <p>
-            {{form.username.label}}
-            {{form.username}}
+<link rel="stylesheet" href="{{ url_for('static',filename = './css/signup.css')}}">
+{%- extends 'base.htm' -%}
+{%block initial%}
 
-        </p>
-        <p>
-            {{ form.password.label}}
-            {{form.password}}
-        </p>
-        {{ form.submit()}}
-    </form>
-</body>
-</html>
+<form action="{{url_for('login')}}" method = "POST" novalidate class = "page-form" >
+    {{ form.hidden_tag()}}
+    <h2 id = "form-heading"> Sign In</h2>
+    <p>
+        <!-- {{form.username.label}} -->
+        {{form.username(placeholder="username")}}
+
+    </p>
+    <p>
+        <!-- {{ form.password.label}} -->
+        {{form.password(placeholder="password")}}
+    </p>
+    {{ form.submit(id = "submit")}}
+</form>
+{%endblock initial%} 
+

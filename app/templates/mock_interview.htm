@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename = './css/ayu-dark.css')}}">
     <link rel="stylesheet" href="{{ url_for('static',filename = './css/blackboard.css')}}">
     <script type="text/javascript">
+      var qs = ["{{q1.id}}", "{{q2.id}}","{{q3.id}}"]
       var contents = ["{{q1.content}}","{{q2.content}}","{{q3.content}}"];
       var titles = ["{{q1.title}}","{{q2.title}}","{{q3.title}}"]
       
@@ -84,10 +85,15 @@
   </p>
   <pre id = "customoutput" style = "display:none"></pre>
   </div>
-  <form action="{{url_for('mock_interview',name = name)}}" method="post"
+  <form action="{{url_for('analysis',name = name)}}" method="post"
   id = "finish"
   >
-     <input type="hidden" name="score">
+     <input type="hidden" name="q1s" id = "q1s">
+     <input type="hidden" name="q2s"  id = "q2s">
+     <input type="hidden" name="q3s" id = "q3s">
+     <input type="hidden" name="q1" id = "q1">
+     <input type="hidden" name="q2"  id = "q2">
+     <input type="hidden" name="q3" id = "q3">
     <button> Finish </button>
   </form>
   <script src="{{url_for('static',filename = './lib/highlight.pack.js')}}"></script>

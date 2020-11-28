@@ -1,42 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    {%with messages = get_flashed_messages()%}
-    <ul class = "mes">
-    {%for message in messages%}
-      <li> {{ message }}</li>
-    {%endfor%}
-    </ul>
-    {%endwith%}
-    <h1> Coding Site</h1>
-    <ul>
-   <li><a href="{{ url_for('signup')}}">Sign up</a></li>
-   {% if current_user.is_anonymous%}
-
-      <li><a href="{{url_for('login')}}">sign in</a></li>
-    {%else%}
-      <li> <a href="{{ url_for('logout')}}">log out</a></li>
-    {%endif%}
-    <li>
-      <a href="{{url_for('admin_login')}}">admin</a>
-    </li>
-    </ul>
-    {% if not current_user.is_anonymous%}
-    <h2>Welcome {{current_user.firstname}}</h2>
-    {%endif%}
-    <a href="{{url_for('mock_interview',name = current_user.username)}}">Mock Interview</a>
+<link rel="stylesheet" href="{{ url_for('static',filename = './css/home.css')}}">
+{%- extends 'base.htm' -%}
+{%block content%}
     <div class = "questions">
-      <ul>
+    <div class = "question-filter">
+      <form action="{{url_for('home')}}" method="POST">
+      <input type="text" name="search" id="question-search">
+      company:
+      <select name="company" id="question-company">
+        <option value = ""> -- select an option -- </option>
+        {%for company in companies%}
+        <option value="{{company.name}}">{{company.name}}</option>
+        {%endfor%}
+      </select>
+      topic:
+      <select name="topic" id="question-topic">
+        <option value=""> -- select an option -- </option>
+        {%for topic in topics%}
+        <option value="{{topic.name}}">{{topic.name}}</option>
+        {%endfor%}
+      </select>
+      <input type="submit" value="apply">
+      <span>
+        <!-- {%if ctg!= ""%} -->
+           {{ctg}}
+        <!-- {%endif%} -->
+        </span>
+      <span>
+        <!-- {% if ttg!= ""%} -->
+           {{ttg}}
+        <!-- {%endif%} -->
+      </span>
+
+      </form>
+    </div>
+    <div class = "question-list">
+    <ul class = "question-list-before" style = "display:none">
         {%for question in questions%}
-          <a href="{{url_for('problem',id = question.id)}}"><li> {{question.title}} </li></a>
+            
+          <li>
+            <a href="{{url_for('problem',id = question.id)}}"> {{question.title}} </a>
+          </li>
         {%endfor%}
       </ul>
+    <div class = "question-list-wrapper">
+     <ul class="question-list-after">
+      
+     </ul>
+    
     </div>
-   
-</body>
-</html>
+    <div class="page-navigate">
+      <span id= "pre-page"><</span><span id="page-no"></span><span id = "next-page">></span>
+     
+    </div>
+    </div>
+<script src="{{url_for("static",filename = "./js/home.js")}}"></script>
+</div>
+{%endblock content%} 
+

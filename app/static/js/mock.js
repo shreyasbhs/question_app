@@ -57,6 +57,8 @@ var submit = function(data,accepted){
                 if(!solved[cur_question]){
                    total+=scores[cur_question];
                    document.querySelector('#score').innerHTML = con_two(total);
+                   let question = 'q'+(cur_question+1).toString()+'s';
+                   document.querySelector('#'+question).value= "true";
                    solved[cur_question] = true;
                 }
               }     
@@ -160,7 +162,12 @@ themeselect.addEventListener('change',()=>{
 var scores = [15,35,50]
 var solved = [false,false,false]
 var total = 0;
-
+document.querySelector('#q1s').value= "false";
+document.querySelector('#q2s').value = "false";
+document.querySelector('#q3s').value = "false";
+document.querySelector('#q1').value = qs[0];
+document.querySelector('#q2').value = qs[1];
+document.querySelector('#q3').value = qs[2];
 
 var inputs = []
 var outputs = []
@@ -248,9 +255,9 @@ document.querySelector('#subbot').addEventListener('click',(e)=>{
 
 //timer
 var i = 0
-var hour = 0;
-var min = 0;
-var sec = 10;
+var hour = 1;
+var min = 29;
+var sec = 59;
 function con_two(n){
    if(n/10>=1)
      return n.toString();
@@ -285,4 +292,7 @@ var timer  = setInterval(
   },
   1000
 )
+document.addEventListener('contextmenu',(e)=>{
+  e.preventDefault();
+})
 

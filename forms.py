@@ -49,7 +49,7 @@ class CreateQuestion(FlaskForm):
     inputfile = FileField('inputfile')
     output = HiddenField('output')
     submit= SubmitField('Add/update')
-    company = MultiCheckboxField('company',choices = [('Amazon','Amazon'),('Oracle','Oracle'),('Abobe','Abobe'),('JP Morgan','JP Morgan'),
+    company = MultiCheckboxField('company',choices = [('Amazon','Amazon'),('Oracle','Oracle'),('Adobe','Adobe'),('JP Morgan','JP Morgan'),
                                                ('Goldman Sacks','Goldman Sacks')])
     topic  = MultiCheckboxField('topic',choices = [('array','array'),('string','string'),('matrix','matrix'),
                                                     ('dp','dp'),('greedy','greedy'),('brut force','brut force')])
