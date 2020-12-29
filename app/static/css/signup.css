@@ -1,6 +1,6 @@
 
 .page-form {
-   background-color:  rgba(246,246,242,0.8);
+   background-color: white;
    position: relative;
    top:20%;
    left:35%;
@@ -12,21 +12,24 @@
    border: 1px solid #1D1D2C;
    overflow: hidden;
    transition: all 150ms ease-in-out;
+   box-shadow: 1px 1px 5px white;
+
 }
 .page-form:hover{
    transform:translate(2px,2px);
    border: 0.5px solid #1D1D2C;
-   box-shadow: 1px 1px 5px white;
+   box-shadow:none;
 }
 #form-heading{
     position: relative;
-    background:linear-gradient(to right bottom,#3c3c5f,#1D1D2C);
+    color:rgb(109, 109, 248);
 
-    color:white;
+    background-color:white;
     text-align: center;
     height:70px;
     margin:0;
     padding:0;
+    border-bottom: 0.1px solid rgb(150, 147, 147);
     /* border-radius: 10%; */
 }
 #form-heading::before{
@@ -47,26 +50,28 @@ input{
     height:30px;
     /* border-radius: 5%; */
     /* z-index: 10; */
-    border:none;
+    border:0.1px solid  rgb(3, 3, 80);
 }
 input:focus{
     outline:none;
-    border:1px solid blue;
-    box-shadow: 1px 1px 2px  blue;
+    border:1px solid rgb(3, 3, 80);
+    box-shadow: 2px 2px 5px  rgb(129, 129, 240);
 }
 input:hover{
     outline:none;
-    border:none;
+    border:0.1px solid  rgb(3, 3, 80);
+    
 }
 #submit{
     margin-left:27%;
     width:30%;
     left:50%;
     margin-bottom: 20px;
-    background-color: orange;
+    background-color: #1D1D2C;
     color:white;
     border-radius: 5%;
     transition: all 300ms ease-in-out;
+    box-shadow:-1px -1px 3px 1px white;
 }
 #submit:hover{
   transform:translate(1px,1px);

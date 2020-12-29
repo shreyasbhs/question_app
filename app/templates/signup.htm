@@ -47,13 +47,14 @@ class = "page-form">
     <p>
         <!-- {{ form.confirm.label}} -->
         {{ form.confirm(size = 30,placeholder="confirm password")}}</br>
-        {% for error in form.confirm.errors%}
+        {% for error in form.confirm.errors%} 
           <span class='er'> {{error}}</span>
         {%endfor%}
     </p>
    
     {{ form.submit(id = "submit") }}
-   
+    <p style = "position: relative;left:10%"> Already have an account 
+      <a style="color:blue" href = "{{url_for('login')}}">sign in</a></p> 
     </div>
 </form>
 

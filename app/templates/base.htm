@@ -9,14 +9,14 @@
 <body>
  
     <div class="topnav">
-    <h1 id = "main-title"> Coding Site</h1>
+    <h1 id = "main-title">Question Analyzer</h1>
     <ul class = "links">
-   <li><a href="{{ url_for('signup')}}">sign up</a></li>
-   {% if current_user.is_anonymous%}
+   <!-- <li><a href="{{ url_for('signup')}}">sign up</a></li> -->
+   <!-- {% if current_user.is_anonymous%}
 
-      <li><a href="{{url_for('login')}}">sign in</a></li>
+    <li><a href="{{url_for('login')}}">sign in</a></li> 
    
-    {%endif%}
+    {%endif%} -->
     <li>
       <a href="{{url_for('admin_login')}}">admin</a>
     </li>
@@ -54,6 +54,21 @@
     {% if current_user.is_anonymous%}
        <div class="background">
       {%block initial%}
+      <p id = "about">
+        
+      </p>
+   <!-- <span><a href="{{ url_for('signup')}}" id="signup">sign up</a></span> -->
+   <span>
+   
+     <a href="{{url_for('login')}}" id = "signin">
+      <span id = "arrow">
+        <img src="{{url_for('static',filename='./res/arrow6.png')}}"> 
+      </span>
+    
+    <span id = "signintext">
+      Sign in
+    </span></a></span>
+   
       {%endblock initial%}
       </div>
 

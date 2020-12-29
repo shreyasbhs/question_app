@@ -3,6 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      html{
+        height:100%;
+      }
+      body{
+        height:100%;
+      }
+      h1{
+        text-align:center;
+        color:rgb(9, 9, 53);
+      }
+      .page-form{
+        position: absolute;
+        /* display:block; */
+        left:35%;
+        top:20%;
+        /* height: 20%; */
+        width:20%; 
+        box-shadow:2px 2px 7px grey;
+        padding:3%;
+      }
+      .page-form:hover{
+        box-shadow:1px 1px 4px grey;
+      }
+            #submit{
+        position: relative;
+        height:30px;
+        width:70px;
+        border:none;
+        outline:none;
+        border-radius:15px;
+        background-color: rgb(154, 154, 247);
+        color:white;
+        left:30%;
+      }
+      .page-form input{
+        position: relative;
+        display: inline-block;
+        left:7%;
+        width:75%;
+       outline:none;
+         
+      }
+
+      input:focus{
+        outline:none;
+        border:0.5px solid grey;
+        box-shadow:0.5px 1px 3px blue;
+      }
+    </style>
     <title>Document</title>
 </head>
 <body>
@@ -13,24 +63,27 @@
     {%endfor%}
     </ul>
     {%endwith%}
+    <div class="page-form">
     <form action="{{url_for('admin_login')}}" method="POST" novalidate>
         {{ form.hidden_tag()}}
+        <h1>Admin Login</h1>
         <p>
-            {{form.username.label}}
-            {{form.username}}
+            <!-- {{form.username.label}} -->
+            {{form.username(placeholder="username")}}
             {% for error in form.username.errors%}
             <span class='er'> {{error}}</span>
           {%endfor%}
 
         </p>
         <p>
-            {{ form.password.label}}
-            {{form.password}}
+            <!-- {{ form.password.label}} -->
+            {{form.password(placeholder="password")}}
             {% for error in form.password.errors%}
             <span class='er'> {{error}}</span>
           {%endfor%}
         </p>
-        {{ form.submit()}}
+        {{ form.submit(id = 'submit')}}
     </form>
+    </div>
 </body>
 </html>

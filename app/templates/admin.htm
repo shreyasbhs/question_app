@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='./css/admin.css')}}">
 </head>
 <body>
-    <a href="{{url_for('new_problem',name = name )}}"> new</a>
-    <a href="{{url_for('home')}}">Home</a>
-    <div class = questions>
+    <a href="{{url_for('new_problem',name = name)}}" id = "new"> new </a>
+    <a href="{{url_for('home')}}" id = "home">Home</a>
+    <div class = "questions">
         <ul>
       {% for question in questions%}
-           <li> {{question.title}}<a href = "{{url_for('update_problem',name = name,id=question.id)}}">
-                 update
-           </a>
+           <li> <span class = "title">{{question.title}}</span>
+             <a href = "{{url_for('update_problem',name = name,id=question.id)}}" class = "update">
+               update
+             </a>
+             
         </li>
       {%endfor%}
     </ul>

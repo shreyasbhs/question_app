@@ -1,9 +1,76 @@
 .CodeMirror{
     position: relative;
-    width:70%;
+    /* width:70%; */
     margin-right:0;
     margin-left:10px;
     margin-top: 10px;
     border: 1px solid black;
-    height:700px;
+    /* height:1000px; */
+    width:100%; 
+    /* width:1000px; */
+}
+
+
+#code-area{
+    position: relative;
+    /* height:80%; */
+    width:70%;
+    /* background-color:aqua; */
+}
+.preference{
+    position: relative;
+    
+    left:3%;
+}
+.run{
+    position: relative;
+    left:87%;
+    margin-top:2%;
+
+}
+.title{
+    position: relative;
+    height:10%;
+    
+    display: inline-block;
+    /* background-color: red; */
+    width:90%;
+    
+}
+.content{
+    position: relative;
+    /* min-height: 50%; */
+    width:90%;
+
+    font-family: andelella;
+    margin-bottom:5%;
+}
+#inp{
+    position: relative;
+    height:30%;
+    width:60%;
+    border:1px solid grey;
+    display: block;
+    outline:none;
+
+}
+#inp:focus{
+    box-shadow:1px 1px 5px blue;
+}
+.wrapper{
+    position: relative;
+    left:5%;
+    width:70%;
+    top:10%;
+    /* border:1px solid grey; */
+    box-shadow:2px 2px 7px blue;
+    padding-left:20px;
+}
+#out{
+    position: relative;
+    height:30%;
+    padding:10px;
+    width:30%;
+    font-family: Arial, Helvetica, sans-serif;
+    border:1px solid grey;
 }

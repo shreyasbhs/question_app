@@ -188,6 +188,19 @@ var codes = ["","",""];
 var cur_question = 0;
 
 var loadcontent = (i)=>{
+  var qus = Array.from(document.querySelectorAll('#questions li'));
+  qus.forEach((e)=>{
+  e.style.background = "none";
+  e.style.backgroundColor = "white";
+  e.style.color = "blue";
+  e.style.boxShadow = "none"
+  e.style.border = '0.1px solid blue';
+   
+  })
+  qus[i].style.background = "linear-gradient(to right bottom,grey,rgb(154, 154, 240))";
+  qus[i].style.color = "white";
+  qus[i].style.boxShadow = "background:linear-gradient(to right bottom,grey,rgb(154, 154, 240))";
+  
   document.querySelector('.title').innerHTML = titles[i];
   document.querySelector('.content').innerHTML = contents[i];
   editor.setValue(codes[i]);
@@ -292,7 +305,7 @@ var timer  = setInterval(
   },
   1000
 )
-document.addEventListener('contextmenu',(e)=>{
-  e.preventDefault();
-})
+// document.addEventListener('contextmenu',(e)=>{
+//   e.preventDefault();
+// })
 

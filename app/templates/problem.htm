@@ -8,19 +8,14 @@
 
     {% include 'base.htm'%}
     {%block content%}
-    
+<div class="wrapper">
 <span class = "title">
-    {{question.title}} by {{question.admin_id}}
+    <h2>{{question.title}}</h2>
 </span><br/>
-<pre>{{question.content}}</pre>
-<p>
-    asked by:
-    {%for company in companies %}
-       {{company.name}},
-    {%endfor%}
-</p>
-<form action="" method = "POST">
-    <select name="language" id="lang">
+<pre class = "content">{{question.content}}</pre>
+<form action="" method = "POST" id = "code-area">
+    <div class="preference">
+    language  <select name="language" id="lang">
         <option value="text/x-csrc">c</option>
         <option value="text/x-c++src">C++</option>
         <option value="python">Python</option>
@@ -29,20 +24,24 @@
        
         
     </select>
-    <select name="theme" id="theme">
+
+    theme<select name="theme" id="theme">
         <option value="default">light</option>
         <option value="blackboard">dark</option>
     </select>
+    </div>
     <textarea name = "code" id = "code">
         {{code}}
     </textarea>
     
   
-    <textarea name="inp" id = "inp" >{{ inp }}</textarea>
+   
     <textarea name="hiddeninp" id="hiddeninp" style="display:none;">{{custominput}}</textarea>
-    <input type="checkbox" name="check"  checked={{check}}>
+    <!-- <input type="checkbox" name="check"  checked={{check}}> -->
+    <div class="run">
     <input type="submit" value="Run" id = "runbot">
     <input type= "submit" value = "Submit" id = "subbot">
+ </div>
 </form>
 
     <span id = sub>
@@ -50,8 +49,9 @@
         <img src="{{url_for('static',filename = './res/submit2.gif')}}" alt="submit"
          width = "50px" height="50px">
     </span>
-
-<p>
+<h2>Input:</h2>
+<textarea name="inp" id = "inp"placeholder="custum input">{{ inp }}</textarea>
+<p class = "output">
     <h2> Output:</h2>
     <pre id = "out">{{ result }}</pre>
 </p>
@@ -62,6 +62,16 @@
        {{topic.name}},
     {%endfor%}
 </p>
+<p>
+    asked by:
+    {%for company in companies %}
+       {{company.name}},
+    {%endfor%}
+</p>
+
+</div>
+
+</div>
 <script src="{{url_for('static',filename = './lib/highlight.pack.js')}}"></script>
 
 <script src="{{url_for('static',filename = './lib/codemirror.js')}}"></script>

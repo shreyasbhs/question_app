@@ -4,15 +4,18 @@ var run = function(data,accepted){
   console.log(data.status);
   if(data.status.description!="Processing"){
     accepted = true;
-    document.querySelector('#sub').style.display = 'none';
-    if(data.stderr)
-     document.querySelector('#out').innerHTML = data.stderr;
-    else{
-    
-      var custom = document.querySelector('#customoutput').innerHTML;
-      console.log("run sucessfully");
-         }
+   
+      document.querySelector('#sub').style.display = 'none';
+      if(data.stderr)
+       document.querySelector('#out').innerHTML = atob(data.stderr);
+      else{
+      
+        var custom = document.querySelector('#customoutput').innerHTML;
+        console.log(data.stdout);
+        document.querySelector('#out').innerHTML = atob(data.stdout);
+        console.log("accepted");
   }
+}
   return accepted;
   }
 var submit = function(data,accepted){
@@ -133,7 +136,8 @@ document.querySelector('#runbot').addEventListener('click',(e)=>{
   e.preventDefault();
     
     
-
+    document.querySelector('#sub').style.display = "block";
+    
     language = lid[langselect.value];
     sourcecode = editor.getValue();
     inputcode  = document.querySelector('#inp').value;
@@ -146,7 +150,8 @@ document.querySelector('#subbot').addEventListener('click',(e)=>{
   e.preventDefault();
     
     
-
+   document.querySelector('#sub').style.display = "block";
+    
     language = lid[langselect.value];
     sourcecode = editor.getValue();
     inputcode  = document.querySelector('#hiddeninp').value;

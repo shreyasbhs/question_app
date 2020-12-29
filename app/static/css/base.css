@@ -5,15 +5,24 @@ html, body {
     width:100vw;
     padding:0;
     overflow:auto;
+    user-select: none;
     
 }
+/* body{
+
+    /* background:url("../res/back5.jpg") center no-repeat; */
+    /* background-size:cover; */
+    
+
 .background{
     position: relative;
     height: 100%;
     width:100%;
     margin:0;
     padding:0;
-    background:url("../res/questionapp_back.png")
+    background:url("../res/back3.png") center no-repeat;
+    background-size:cover;
+    /* overflow: hidden; */
 }
 h1 {
     margin-top: 0;
@@ -23,13 +32,13 @@ h1 {
     position: sticky;
     margin:0;
     /* margin-top: -32px; */
-    background:linear-gradient(to right bottom,#3c3c5f,#1D1D2C);
+    background-color:white;
     top:0;
     padding:0;
     width: 100%;
-    height:10%;
+    height:7%;
     z-index: 12;
-    box-shadow: 0.5px 0.5px 5px  white;
+    box-shadow: 2px 2px 7px rgb(80, 69, 236);
     /* border:1px solid black; */
 }
 .links{
@@ -51,7 +60,7 @@ h1 {
     text-align:center;
     margin:0;
     /* font-weight:bold; */
-    color:white;
+    color:#1D1D2C;
     height: 100%;
     /* border:1px solid white; */
 }
@@ -66,6 +75,9 @@ h1 {
     display: block;
     height: 15%;
   }
+
+
+
 /* .links li::after{
     position: absolute;
     content:"";
@@ -76,7 +88,8 @@ h1 {
     top:95%;
 } */
 .links li a{
-    color:white;
+    color:#1D1D2C;
+    
 }
 
 a{
@@ -96,9 +109,10 @@ a{
     padding:0;
     height:100%;
     width:30%;
-    left:5%;
+    left:7%;
     text-align: center;
-    color: #F7F4E9;
+    color:#1D1D2C;
+    
 }
 
 
@@ -110,6 +124,7 @@ padding:0;
 width:100%; 
 position: relative;
 top:13%;
+/* background-color: #1D1D2C; */
 }
 .user{
     position: relative;
@@ -184,3 +199,66 @@ top:13%;
     color:rgb(3, 59, 3);
     border:1px solid rgb(3, 59, 3) 
 }
+
+#signin,#signup{
+    position: absolute;
+    top:50%;
+    left:65%;   
+    display: inline-block;
+    width:15%;
+    height:10%;
+   
+    background-color: white;
+    color: #1D1D2C;
+    border-radius: 5%;
+    font-size:2.5rem;
+    /* font-weight: bold; */
+
+    box-shadow:-2px -2px 7px 1px #1D1D2C;
+    text-align: center;
+    overflow: hidden;
+}
+#signin::before,#signup::before{
+    display: block;
+    content:"";
+    height:15%;
+
+}
+#signin:hover{
+    box-shadow: none;
+    /* font-size:1.7em; */
+}
+#signin #signintext{
+    position:absolute;
+    height:30%;
+    left:20%;
+    transition:all 300ms ease-in-out;
+}
+#arrow{
+    position:absolute;
+    left:-30%;
+    top:10%;
+    transition: all 300ms ease-in-out;
+}
+#signin:hover #signintext{
+    left:40%;
+
+}
+#signin:hover #arrow{
+    left:10%;
+}
+#about{
+    /* top:70%; */
+    left:10px;
+    padding:15px;
+    /* width:70%; */
+    /* height:100%; */
+    color:grey;
+    font-size:1.2rem;
+    /* background-color:rgb(7, 7, 7,0.5); */
+    
+
+}
+
+
+

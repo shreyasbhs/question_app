@@ -4,41 +4,50 @@
     <div class = "questions">
     <div class = "question-filter">
       <form action="{{url_for('home')}}" method="POST">
-      <input type="text" name="search" id="question-search">
+      <input type="text" name="search" id="question-search" placeholder = "search by title">
       company:
       <select name="company" id="question-company">
-        <option value = ""> -- select an option -- </option>
+        <option value = ""> All </option>
         {%for company in companies%}
         <option value="{{company.name}}">{{company.name}}</option>
         {%endfor%}
       </select>
       topic:
       <select name="topic" id="question-topic">
-        <option value=""> -- select an option -- </option>
+        <option value=""> All </option>
         {%for topic in topics%}
         <option value="{{topic.name}}">{{topic.name}}</option>
         {%endfor%}
       </select>
-      <input type="submit" value="apply">
-      <span>
-        <!-- {%if ctg!= ""%} -->
+      <input type="submit" value="apply" id = "filter"></br>
+    </form>
+    
+    {%if ctg!= ""%}
+      <span class = "tag">
            {{ctg}}
-        <!-- {%endif%} -->
         </span>
-      <span>
-        <!-- {% if ttg!= ""%} -->
+    {%endif%}
+    
+    {% if ttg!= ""%}
+    
+      <span class = "tag">
            {{ttg}}
-        <!-- {%endif%} -->
       </span>
-
-      </form>
+      {%endif%}
+    
     </div>
     <div class = "question-list">
+      
     <ul class = "question-list-before" style = "display:none">
+      
         {%for question in questions%}
             
           <li>
-            <a href="{{url_for('problem',id = question.id)}}"> {{question.title}} </a>
+            <span class = "slno" style = "font-weight:bold">{{question.id}}</span> <span class = "title" ">
+              <a href="{{url_for('problem',id = question.id)}}"  style="color:rgb(52, 52, 247);font-weight:bold"> {{question.title}}</a>
+            </span>
+            <span class="difficulty">NA</span>
+            <span class="solution">som</span>
           </li>
         {%endfor%}
       </ul>
@@ -46,13 +55,18 @@
      <ul class="question-list-after">
       
      </ul>
+     <div class="page-navigate">
     
-    </div>
-    <div class="page-navigate">
-      <span id= "pre-page"><</span><span id="page-no"></span><span id = "next-page">></span>
+      <span id = "next-page">></span>
+      <span id="page-no">1</span>
+      <span id= "pre-page" ><</span>
+    
      
     </div>
     </div>
+   
+    </div>
+<script src="{{url_for('static',filename = './lib/jquery.min.js')}}"></script>
 <script src="{{url_for("static",filename = "./js/home.js")}}"></script>
 </div>
 {%endblock content%} 
