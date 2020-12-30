@@ -7,6 +7,7 @@ from flask_login import current_user,login_user,logout_user
 from models import (User,Question,Admin,Topic,
                     Company
                      )
+from firebase import storage
 from app import db
 import random
 from compiler import compile_it
@@ -115,17 +116,22 @@ def new_problem(name):
         ofile = q.title.data+'_o.txt'
         ifile = q.title.data+'_i.txt'
         #gerate inputfile
-        q.inputfile.data.save(os.path.join(basedir,'io\\input\\'+ifile))
+        q.inputfile.data.save('./'+ifile)
+        
+        storage.child('io/input/'+ifile).put('./'+ifile)
+        os.remove(ifile)
+        # f.close()
         #generate output file
         
-        file = open(os.path.join(basedir,'io\\output\\'+ofile),'w')
+        file = open('./'+ofile,'w')
         file.close()
-        with open(os.path.join(basedir,'io\\output\\'+ofile),'w') as of:
+        with open('./'+ofile,'w') as of:
             for line in q.output.data:
                 line = line.rstrip('\n')
                 of.write(line)
+            storage.child('io/output/'+ofile).put(ofile)
             of.close()
-            
+        os.remove(ofile)  
             
         
         que = Question(title  = q.title.data,content = q.content.data,
@@ -206,10 +212,12 @@ def problem(id):
                 topics.append(t)
         fi = question.inputfile
         fo =question.outputfile
-        custom_o_file = open(os.path.join(basedir,'io\\output\\'+fo),'r')
-        custom_i_file = open(os.path.join(basedir,'io\\input\\'+fi),'r')
-        customoutput = custom_o_file.read()
-        custominput = custom_i_file.read()
+      
+       
+        
+        customoutput = storage.child('io/output/'+fo).get_url(fo)
+        custominput =   storage.child('io/input/'+fi).get_url(fi)
+      
         if request.method == 'POST':
             if request.form['solved']=="true":
                 print('to be coded')
