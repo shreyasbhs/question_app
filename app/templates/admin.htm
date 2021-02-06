@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='./css/admin.css')}}">
-</head>
-<body>
-    <a href="{{url_for('new_problem',name = name)}}" id = "new"> new </a>
-    <a href="{{url_for('home')}}" id = "home">Home</a>
+{%extends 'admin_login.htm'%}
+   
+
+  {%block content%}
+  <div class="head">
+
+    <span id="new_prob"><a href="{{url_for('new_problem',name = name)}}" id = "new"> new </a></span>
+    <span id="go_home"><a href="{{url_for('home')}}" id = "home">Home</a></span>
+  </div>
     <div class = "questions">
         <ul>
+          <!-- <li> <span class ="slno">#</span><span class="title">title</span></li> -->
       {% for question in questions%}
-           <li> <span class = "title">{{question.title}}</span>
+           <li><span class = "slno"></span> <span class = "title">{{question.title}}</span>
              <a href = "{{url_for('update_problem',name = name,id=question.id)}}" class = "update">
                update
              </a>
@@ -21,5 +20,11 @@
       {%endfor%}
     </ul>
     </div>
-</body>
-</html>
+    <script>
+      var sl = Array.from(document.querySelectorAll('.slno'))
+      for(var i = 0;i<sl.length;i++)
+        {
+          sl[i].innerHTML = (i+1).toString();
+        }
+    </script>
+    {%endblock content%}

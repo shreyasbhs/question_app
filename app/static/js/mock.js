@@ -56,7 +56,7 @@ var submit = function(data,accepted){
               {
                 if(!solved[cur_question]){
                    total+=scores[cur_question];
-                   document.querySelector('#score').innerHTML = con_two(total);
+                   document.querySelector('#score').innerHTML = 'SCORE: '+con_two(total);
                    let question = 'q'+(cur_question+1).toString()+'s';
                    document.querySelector('#'+question).value= "true";
                    solved[cur_question] = true;
@@ -191,15 +191,16 @@ var loadcontent = (i)=>{
   var qus = Array.from(document.querySelectorAll('#questions li'));
   qus.forEach((e)=>{
   e.style.background = "none";
-  e.style.backgroundColor = "white";
-  e.style.color = "blue";
-  e.style.boxShadow = "none"
-  e.style.border = '0.1px solid blue';
+  e.style.backgroundColor = "blue";
+  e.style.color = "white";
+  // e.style.boxShadow = "none"
+  // e.style.border = '0.1px solid blue';
    
   })
-  qus[i].style.background = "linear-gradient(to right bottom,grey,rgb(154, 154, 240))";
-  qus[i].style.color = "white";
-  qus[i].style.boxShadow = "background:linear-gradient(to right bottom,grey,rgb(154, 154, 240))";
+  qus[i].style.backgroundColor= "white";
+  qus[i].style.color = "blue";
+  qus[i].style.border = '0.1px solid blue';
+  qus[i].style.borderBottom = 'none';
   
   document.querySelector('.title').innerHTML = titles[i];
   document.querySelector('.content').innerHTML = contents[i];
@@ -213,7 +214,7 @@ var loadcontent = (i)=>{
 } 
 // initialize
 loadcontent(cur_question);
-document.querySelector('#score').innerHTML = con_two(total);
+document.querySelector('#score').innerHTML = 'SCORE: '+con_two(total);
 
 
 

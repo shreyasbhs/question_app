@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import widgets,SelectMultipleField
 from wtforms import (StringField,PasswordField,BooleanField,SubmitField,
-                     TextField,SelectField,HiddenField)
+                     TextField,SelectField,HiddenField,SelectField)
 from wtforms.validators import ValidationError,DataRequired,Length,Email,EqualTo
 from models import User,Admin,Question
 
@@ -53,7 +53,7 @@ class CreateQuestion(FlaskForm):
                                                ('Goldman Sacks','Goldman Sacks')])
     topic  = MultiCheckboxField('topic',choices = [('array','array'),('string','string'),('matrix','matrix'),
                                                     ('dp','dp'),('greedy','greedy'),('brut force','brut force')])
-    
+    difficulty = SelectField('difficulty',choices = [('Easy','Easy'),('Medium','Medium'),('Hard','Hard')])
     def validate_title(self,title):
         q = Question.query.filter_by(title=title.data).first()
         if q is not None:

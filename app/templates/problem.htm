@@ -56,6 +56,10 @@
     <pre id = "out">{{ result }}</pre>
 </p>
 <pre id = "customoutput" style = "display:none">{{customoutput}}</pre>
+<form action="{{url_for('problem',id = id)}}" method = "POST" id="solve">
+<input type="hidden" id = "solved" name="solved" value = "false">
+<input type="hidden" name = "code" id = "subcode">
+</form>
 <p>
     related topics:
     {% for topic in topics%}

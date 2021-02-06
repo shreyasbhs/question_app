@@ -53,7 +53,7 @@ if(uploaded){
     language = lid[langselect.value];
     sourcecode = editor.getValue();
     document.querySelector('#process').style.display = "inline";
-    fetch("https://judge0.p.rapidapi.com/submissions", {
+    fetch("https://judge0-ce.p.rapidapi.com/submissions", {
         "method": "POST",
         "headers": {
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ if(uploaded){
            clearInterval(feed);
            return;
           }
-          fetch("https://judge0.p.rapidapi.com/submissions/"+token+"?base64_encoded=true", {
+          fetch("https://judge0-ce.p.rapidapi.com/submissions/"+token+"?base64_encoded=true", {
         "method": "GET",
         "headers": {
           "x-rapidapi-key": "c62c0db617msh7a7282a1a7c80d3p1a88d3jsn7b1f12f9ed62",
@@ -124,3 +124,8 @@ else{
     document.querySelector("#uperr").style.display = "inline";
 }
 });
+
+//UI
+
+
+document.querySelector('')

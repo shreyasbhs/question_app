@@ -46,7 +46,7 @@
             <span class = "slno" style = "font-weight:bold">{{question.id}}</span> <span class = "title" ">
               <a href="{{url_for('problem',id = question.id)}}"  style="color:rgb(52, 52, 247);font-weight:bold"> {{question.title}}</a>
             </span>
-            <span class="difficulty">NA</span>
+            <span class="difficulty-{{question.difficulty}}">{{question.difficulty}}</span>
             <span class="solution">som</span>
           </li>
         {%endfor%}

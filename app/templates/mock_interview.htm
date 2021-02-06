@@ -19,7 +19,7 @@
 </head>
 <body>
 <span id = "timer">
-
+   
 </span>
 <span id="score">
 
@@ -34,17 +34,19 @@
       <li>{{out}}</li>
       {%endfor%}
     </ul>
+    <div class="question-wrapper">
     <ul id = "questions">
       <li>Question 1</li>
       <li>Question 2</li>
       <li>Question 3</li>
 
     </ul>
+  </div>
   <div class="question">
     <p class = "title">
       </p>
   <pre class = "content"></pre>
-  </div>
+
   <div class = "editor">
     
   
@@ -96,6 +98,7 @@
      <input type="hidden" name="q3" id = "q3">
     <button> Finish </button>
   </form>
+</div>
   <script src="{{url_for('static',filename = './lib/highlight.pack.js')}}"></script>
     
   <script src="{{url_for('static',filename = './lib/codemirror.js')}}"></script>

@@ -4,10 +4,14 @@ ul{
     list-style-type: none;
 
 }
+
+   
 #questions{
+    margin:10px;
     position: relative;
     width: 100%;
-    height:10%;
+    height:100%;
+    /* top:20%; */
     user-select: none;
 }
 #questions li{
@@ -17,8 +21,8 @@ ul{
     width:33%;
     margin-right:-3px;
     background:none;
-    background-color: white;
-    color:blue;
+    background-color: blue;
+    color:white;
     /* border:1px solid rgb(190, 189, 189); */
     
     font-weight: bold;
@@ -26,8 +30,39 @@ ul{
 }
 #questions li:hover{
     cursor: pointer;
-    background:linear-gradient(to right bottom,grey,rgb(154, 154, 240));
-    color:white;
+    background:none;
+    background-color:white;
+    color:blue;
+    border:0.5px solid blue;
+    border-bottom:none;
+    /* color:white; */
     transform:translate(1px,1px);
     /* color:blue; */
+}
+#timer{
+    position:relative;
+    background-color:black;
+    color:white;
+    font-weight:bold;
+    font-size:1.3rem;
+    top:2%;
+    left:2%;
+}
+#score{
+    position:relative;
+    background-color:orange;
+    color:white;
+    font-weight:bold;
+    font-size:1.3rem;
+    top:15%;
+    left:80%;
+    padding:10px;
+    border-radius: 10px;
+    /* margin:10px; */
+    /* float:right; */
+}
+.question{
+    position: relative;
+    margin:10px;
+    border:1px solid grey;
 }

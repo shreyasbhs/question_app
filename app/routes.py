@@ -62,7 +62,7 @@ def signup():
             user.set_password(u.password.data)
             db.session.add(user)
             db.session.commit()
-            flash("You have registered sucessfully!!!")
+            flash("You have registered sucessfully!!!","success")
             return redirect(url_for('login'))
         return render_template('signup.htm',form = form)
 
@@ -76,7 +76,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username = form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash("Invalid User name or Password")
+            flash("Invalid User name or Password. Try again","error")
             return redirect(url_for('login'))
         login_user(user,remember = True)
         return redirect(url_for('home'))
@@ -95,7 +95,7 @@ def admin_login ():
     if form.validate_on_submit():
         admin = Admin.query.filter_by(username = form.username.data).first()
         if admin is None or not admin.password==form.password.data:
-            flash("Invalid User name or Password")
+            flash("Invalid User name or Password","error")
             return redirect(url_for('admin_login'))
         return redirect(url_for('admin',name = form.username.data))
     return render_template('admin_login.htm',form = form)
@@ -129,13 +129,14 @@ def new_problem(name):
             for line in q.output.data:
                 line = line.rstrip('\n')
                 of.write(line)
-            storage.child('io/output/'+ofile).put(ofile)
             of.close()
-        os.remove(ofile)  
-            
+        storage.child('io/output/'+ofile).put('./'+ofile)
         
+        # os.remove(ofile)  
+            
+        difficulty = q.difficulty.data
         que = Question(title  = q.title.data,content = q.content.data,
-                      outputfile = ofile,inputfile = ifile)
+                      outputfile = ofile,inputfile = ifile,difficulty = difficulty)
        
         for topic in request.form.getlist('topic'):
             t = Topic.query.filter_by(name = topic).first()
@@ -143,6 +144,7 @@ def new_problem(name):
         for company in request.form.getlist('company'):
             c  = Company.query.filter_by(name = company).first()
             c.questions.append(que)
+        
         db.session.add(que)
         db.session.commit()
         a = Admin.query.filter_by(username = name).first()
@@ -167,16 +169,25 @@ def update_problem(name,id):
         ofile = q.title.data+'_o.txt'
         ifile = q.title.data+'_i.txt'
         #gerate inputfile
-        q.inputfile.data.save(os.path.join(basedir,'io\\input\\'+ifile))
+        q.inputfile.data.save('./'+ifile)
+        
+        storage.child('io/input/'+ifile).put('./'+ifile)
+        os.remove(ifile)
+        # f.close()
         #generate output file
         
-        file = open(os.path.join(basedir,'io\\output\\'+ofile),'w')
+        file = open('./'+ofile,'w')
         file.close()
-        with open(os.path.join(basedir,'io\\output\\'+ofile),'w') as of:
+        with open('./'+ofile,'w') as of:
             for line in q.output.data:
                 line = line.rstrip('\n')
                 of.write(line)
             of.close()
+        storage.child('io/output/'+ofile).put('./'+ofile)
+        
+        os.remove(ofile)  
+            
+
             
             
             
@@ -220,7 +231,16 @@ def problem(id):
       
         if request.method == 'POST':
             if request.form['solved']=="true":
-                print('to be coded')
+               flash("Well Done!!","success")
+               code = request.form["code"]
+               question  = Question.query.filter_by(id = id).first()
+               if question not in current_user.solves:
+                 current_user.solves.append(question)
+               return render_template('problem.htm',result = "",code = code,
+                                   inp = "",question = question,id = question.id,
+                                   companies = companies,topics = topics,
+                                   customoutput = customoutput,custominput = custominput);
+
                 
         else:
             
@@ -252,13 +272,16 @@ def mock_interview(name):
     for q in qs:
         fi = q.inputfile
         fo =q.outputfile
-        custom_o_file = open(os.path.join(basedir,'io\\output\\'+fo),'r')
-        custom_i_file = open(os.path.join(basedir,'io\\input\\'+fi),'r')
-        customoutput = custom_o_file.read()
-        custominput = custom_i_file.read()
+      
+        storage.child('io/output/'+fo).download(fo)
+        storage.child('io/input/'+fi).download(fi)
+        custominput = open('./'+fi,'r').read()
+        customoutput = open('./'+fo,'r').read()
+        os.remove(fi)
+        os.remove(fo)
         inputs.append(custominput)
         outputs.append(customoutput)
-   
+        print(custominput)
     else:
         # u = User.query.filter_by(username= name).first()
         # check = u.is_attempting

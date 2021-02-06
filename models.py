@@ -21,7 +21,11 @@ student_solves_question = db.Table('student_solves_question',
     db.Column('question_id',db.Integer, db.ForeignKey('question.id')),
     db.Column('user_id',db.Integer, db.ForeignKey('user.id'))
     )
-
+student_attempts_question = db.Table('student_attempts_question',
+    db.Column('id',db.Integer,primary_key = True),
+    db.Column('question_id',db.Integer, db.ForeignKey('question.id')),
+    db.Column('user_id',db.Integer, db.ForeignKey('user.id'))
+    )
 class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     firstname = db.Column(db.String(30),index = True)
@@ -32,8 +36,9 @@ class User(UserMixin,db.Model):
     is_attempting = db.Column(db.Boolean,index = True)
     profile = db.relationship('Profile',backref = db.backref('profile'))
     solves = db.relationship('Question',secondary= student_solves_question,
-            backref=db.backref('student'))
-
+            backref=db.backref('student_solved'))
+    attempts = db.relationship('Question',secondary = student_attempts_question,
+                backref=db.backref('student_attempted'))
     def set_password(self,password):
         self.password = generate_password_hash(password)
     def check_password(self,password):

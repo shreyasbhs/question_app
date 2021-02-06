@@ -25,13 +25,15 @@ var submit = function(data,accepted){
     document.querySelector('#sub').style.display = 'none';
     if(data.stderr)
      document.querySelector('#out').innerHTML = atob(data.stderr);
+
     else{
     
       var custom = document.querySelector('#customoutput').innerHTML;
       console.log(data.stdout);
       document.querySelector('#out').innerHTML = atob(data.stdout);
       console.log("accepted");
-      // document.querySelector('form').submit();
+      document.querySelector('#solved').value = "true";
+      document.querySelector('#solve').submit();
 
          }
   }
@@ -160,4 +162,7 @@ document.querySelector('#subbot').addEventListener('click',(e)=>{
 });
 
 
-
+setInterval(()=>{
+     var code = editor.getValue();
+     document.querySelector('#subcode').value = code;
+},1000)
